@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+$input = implode(' ', array_slice($argv, 1));
+if($input && file_exists($input)) {
+    echo json_encode(simplexml_load_file($input)) . PHP_EOL;
+    return;
+}
+
+if(ftell(STDIN) === 0){
+    $stdin = stream_get_contents(STDIN);
+    echo json_encode(simplexml_load_string($stdin)) . PHP_EOL;
+    return;
+}
+
+echo "Usage:" . PHP_EOL;
+echo "\t cat test.xml | xml2json" . PHP_EOL;
+echo "\t xml2json test.xml" . PHP_EOL;
